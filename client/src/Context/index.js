@@ -35,12 +35,9 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
       web3ModalRef.current = new Web3Modal({
-        network: "sepolia",
+        network: "hardhat",
         providerOptions: {
-          // sepolia: {
-          //   chainId: "11155111" ,
-          //   rpcUrl: "https://sepolia.infura.io/v3/"
-          // }
+         
         },
         disableInjectedProvider: false,
       });

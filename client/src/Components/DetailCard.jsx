@@ -61,8 +61,8 @@ export default function DetailCard({ product, getProductData }) {
     try {
       const contract = await writeContract();
       const _tokendetails = await contract.listToken(
-        "63d79795c9259578fe693a88",
-        utils.parseEther("0.027"),
+        "63d79763c9259578fe693a85",
+        utils.parseEther("0.021"),
         "1000"
       );
       _tokendetails.wait;
@@ -267,7 +267,7 @@ export default function DetailCard({ product, getProductData }) {
                     marginLeft: "-20px",
                     height: "50px",
                   }}
-                  onClick={() => tokenDetails()}
+                  onClick={() => BuyToken()}
                 >
                   Processed to Pay
                 </button>
