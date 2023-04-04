@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  padding: 0;
+  .heading-lvl-one {
+    color: #294378;
+  }
+
+  .p-relative {
+    position: relative;
+  }
+  .p-absolute {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+
+  .mainContainer {
+    & .navbarWrapper {
+      .navbar {
+        background-color: #294378;
+        .my-border {
+          border-bottom: 3px solid white;
+        }
+
+        img {
+          width: 150px;
+          margin-right: 20px;
+        }
+        .navbar-nav {
+          a.nav-link {
+            font-size: 22px;
+            color: white;
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    & .login,
+    .signup {
+      .col-12 {
+        border: 2px solid #294378;
+      }
+
+      input {
+        border: 1px solid #294378;
+      }
+
+      .gold-btn-solid {
+        background-color: #294378;
+        width: 100px;
+        height: 40px;
+        border: none;
+        color: white;
+      }
+      .heading-lvl-one {
+        color: #294378;
+        + p {
+          font-size: 18px;
+        }
+      }
+
+      .PhoneInput {
+        border: 1px solid #294378;
+      }
+
+      #signupNumber {
+        border: none !important;
+      }
+    }
+
+    .market-place,
+    .product-detail {
+      .card {
+        border-color: #294378;
+
+        & img:first-child {
+          width: 50px;
+          height: 50px;
+        }
+      }
+    }
+  }
+}
