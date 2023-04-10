@@ -1,4 +1,4 @@
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const setAccessToken = (token) => {
   localStorage.setItem("user_token", token);
@@ -27,14 +27,14 @@ export const buildFormData = (formData, data, parentKey) => {
   }
 };
 
-// export const notification = (message, type = "success") => {
-//   toast[type](message, {
-//     position: "top-center",
-//     autoClose: 1000,
-//     hideProgressBar: true,
-//     closeOnClick: true,
-//     pauseOnHover: true,
-//     draggable: true,
-//     progress: 0,
-//   });
-// };
+export const notification = (message, type = "success") => {
+  toast[type](message, {
+    position: "top-center",
+    autoClose: 1000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: 0,
+  });
+};

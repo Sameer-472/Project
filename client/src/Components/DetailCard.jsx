@@ -15,37 +15,67 @@ export default function DetailCard({ product, getProductData }) {
   const { readContract, writeContract } = useContext(Context);
 
   const [tokenPrice, settokenPrice] = useState(product?.token_price);
-  // const [tokenPrice, settokenPrice] = useState(1);
   const [noOfTokens, setnoOfTokens] = useState(1);
   const [rates, setRates] = useState({});
+  const [first, setfirst] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tokenSupply, settokenSupply] = useState(BigNumber.from(0));
+  console.log(rates);
 
   const handleNoOfTokens = (e) => {
     const value = parseInt(e.target.value);
-    if (value >= 1) {
+    if (value >= 1 && value<=50) {
+      setfirst(true);
       setnoOfTokens(value);
       settokenPrice(value * product?.token_price);
     }
   };
-  console.log(rates);
 
+  useEffect(() => {
+    console.log(product);
+    settokenPrice(product?.token_price);
+    console.log(tokenPrice);
+  }, []);
+
+
+  const tokenDetails = async () => {
+    try {
+      const contract = await readContract();
+      const totalTokenSupply = await contract._idToTokenDetails(
+        product?._id
+      );
+      settokenSupply(totalTokenSupply.tokenSupply);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
   const BuyToken = async () => {
     try {
       console.log(rates.USD);
       console.log(rates.ETH);
       const _1dollarToEther = rates.ETH / rates.USD;
-      console.log(_1dollarToEther);
-      const tokenPriceInEther = _1dollarToEther * tokenPrice;
-      console.log(tokenPriceInEther);
+      // const num = 0.0005365181048034467;
+      // const roundedNum = parseFloat(_1dollarToEther.toFixed(6)); // Round to 6 decimal places and convert back to a number
+      // const result = roundedNum.toFixed(6); // Round again to 6 decimal places for display, if needed
+      console.log(_1dollarToEther.toFixed(5)); // Output: 0.000054
+      // console.log(_1dollarToEther);
+      const tokenPriceInEther = _1dollarToEther.toFixed(5) * tokenPrice;
+      console.log("value", tokenPriceInEther);
       const contract = await writeContract();
       const _tokendetails = await contract.buyTokens(
         product._id,
         noOfTokens.toString(),
         {
           value: utils.parseEther(tokenPriceInEther.toString()),
-          gasLimit: "300000",
+          // value: utils.parseEther("0.076"),
+          gasLimit: "3000000",
         }
       );
+      setLoading(true)
       _tokendetails.wait();
+      tokenDetails();
+      setLoading(false);
       Swal.fire(
         "Transaction Successful!",
         // `<a href="https://goerli.etherscan.io/tx/${receipt.hash}" target="_blank">Verify your transaction</a>`,
@@ -71,19 +101,7 @@ export default function DetailCard({ product, getProductData }) {
     }
   };
 
-  const tokenDetails = async () => {
-    try {
-      const contract = await readContract();
-      const _tokendetails = await contract._idToTokenDetails(
-        "63d79795c9259578fe693a88"
-      );
-      console.log(_tokendetails)
-      // console.log(parseEther(_tokendetails.tokenPrice.toNumber()))
-      // _tokendetails.wait;
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
 
   // tokeDetails();
 
@@ -101,13 +119,15 @@ export default function DetailCard({ product, getProductData }) {
     }
   };
 
-
   useLayoutEffect(() => {
+    // console.log(product);
     const getRates = async () => {
       const rate = await getEthRate();
       setRates(rate?.data);
+      settokenPrice(product?._token_price);
     };
     getRates();
+    tokenDetails()
   }, [JSON.stringify(rates)]);
 
   const payNow = async () => {
@@ -219,8 +239,16 @@ export default function DetailCard({ product, getProductData }) {
                 <div className="top-text d-flex align-items-center justify-content-between">
                   {/* <h3 className="card-title">{product?.title}</h3> */}
                   <div className="card-title">
-                    <span>Token Price</span>
-                    <h3>USD {tokenPrice}.00</h3>
+                    <span className="ml-10">
+                      <span>Total Price</span>
+                      <h3>USD {product?.total_price}.00$</h3>
+                    </span>
+                    <span>
+                      <span>Token Price</span>
+                      <h3>
+                        USD {first ? tokenPrice : product?.token_price}.00$
+                      </h3>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -257,7 +285,22 @@ export default function DetailCard({ product, getProductData }) {
                     height: "50px",
                   }}
                 />
+                {loading ? 
                 <button
+                className="card-text p-2 text-light"
+                style={{
+                  border: "none",
+                  borderTopRightRadius: "8px",
+                  borderBottomRightRadius: "8px",
+                  backgroundColor: "#294378",
+                  marginLeft: "-20px",
+                  height: "50px",
+                }}
+                disabled={true}
+                // onClick={() => BuyToken()}
+              >
+                Loading...
+              </button>: <button
                   className="card-text p-2 text-light"
                   style={{
                     border: "none",
@@ -270,7 +313,8 @@ export default function DetailCard({ product, getProductData }) {
                   onClick={() => BuyToken()}
                 >
                   Processed to Pay
-                </button>
+                </button>}
+                <div>Token Supply: {" "}{utils.formatEther(tokenSupply)}</div>
               </div>
             </div>
           </div>

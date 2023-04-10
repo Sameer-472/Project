@@ -10,6 +10,7 @@ import MarketPlace from "../Pages/MarketPlace/Index";
 import ProductDetail from "../Pages/ProductDetail/Index";
 import Wishlist from "../Pages/Wishlist/Index";
 import ViewToken from "../Components/ViewToken";
+import ListItem from "../Components/ListItem";
 
 export default function Router() {
   const match = useMatch(window.location.pathname);
@@ -27,6 +28,7 @@ export default function Router() {
       <Route path={routes.login} element={<AuthGuard><Login /></AuthGuard>} />
       <Route path={routes.signup} element={<AuthGuard><Signup /></AuthGuard>} />
       <Route path={routes.buyTokens} element={<ViewToken/>}/>
+      <Route path={routes.listItem} element={<ListItem/>}/>
     </Routes>
   );
 }

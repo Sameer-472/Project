@@ -9,5 +9,6 @@ export default {
   },
   wishlist: "/wishlist",
   contact: "/contact-us",
-  buyTokens: "/buy-tokens"
+  buyTokens: "/buy-tokens",
+  listItem: "/list-item"
 };

@@ -57,32 +57,33 @@ export default function ViewToken() {
   };
 
   const buyTokens = async (amount) => {
-    try {
-      const value = 0.00055 * amount;
-      const contract = await writeContract();
-      console.log(address);
-      console.log(value)
-      const tx = await contract.buyTokens(amount,{
-        value: utils.parseEther(value.toString())
-      });
-      setloading(true)
-      await tx.wait()
-      getBalance();
-      tokenMinted();
-      totalSupply();
-      setloading(false)
-      Swal.fire(
-        "Transaction Successful!",
-        "success"
-      );
-    } catch (error) {
-      // console.log(error);
-      Swal.fire(
-        "Transaction Faild!",
-        `${error.message}`,
-        "error"
-      );
-    }
+    console.log("heelo")
+    // try {
+    //   const value = 0.00055 * amount;
+    //   const contract = await writeContract();
+    //   console.log(address);
+    //   console.log("value is..",value)
+    //   const tx = await contract.buyTokens(amount,{
+    //     value: utils.parseEther(value.toString())
+    //   });
+    //   setloading(true)
+    //   await tx.wait()
+    //   getBalance();
+    //   tokenMinted();
+    //   totalSupply();
+    //   setloading(false)
+    //   Swal.fire(
+    //     "Transaction Successful!",
+    //     "success"
+    //   );
+    // } catch (error) {
+    //   // console.log(error);
+    //   Swal.fire(
+    //     "Transaction Faild!",
+    //     `${error.message}`,
+    //     "error"
+    //   );
+    // }
   };
 
   useEffect(() => {

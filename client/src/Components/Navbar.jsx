@@ -4,16 +4,14 @@ import { Link } from "react-router-dom";
 import routes from "../routes/routes";
 import { getAccessToken } from "../Util/helpers";
 import ConnectWalletButton from "./ConnectWalletButton";
-import {
-  useAddress
-} from "@thirdweb-dev/react";
+import { useAddress } from "@thirdweb-dev/react";
 
 export default function Navbar() {
   let token = getAccessToken();
 
   const address = useAddress();
 
-  const [isActive, setActive] = useState('home');
+  const [isActive, setActive] = useState("home");
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -27,7 +25,7 @@ export default function Navbar() {
             <Link
               className="navbar-brand"
               to={routes.home}
-              onClick={() => setActive('/')}
+              onClick={() => setActive("/")}
             >
               <img
                 className="img-fluid"
@@ -35,48 +33,64 @@ export default function Navbar() {
                 alt="logo"
               />
             </Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 <Link
                   to={routes.home}
-                  onClick={() => setActive('/')}
+                  onClick={() => setActive("/")}
                   aria-current="page"
-                  className={isActive == '/' ? 'nav-link my-border' : 'nav-link'}
+                  className={
+                    isActive == "/" ? "nav-link my-border" : "nav-link"
+                  }
                 >
                   Home
                 </Link>
                 <Link
                   to={routes.marketPlace.index}
-                  onClick={() => setActive('market')}
-                  className={isActive.includes('market') ? 'nav-link my-border' : 'nav-link'}
+                  onClick={() => setActive("market")}
+                  className={
+                    isActive.includes("market")
+                      ? "nav-link my-border"
+                      : "nav-link"
+                  }
                 >
                   Market Place
                 </Link>
-                {address && <Link
-                  to={routes.buyTokens}
-                  onClick={() => setActive('buyTokens')}
-                  className={isActive.includes('buyTokens') ? 'nav-link my-border' : 'nav-link'}
-                >
-                  Buy Tokens
-                </Link>}
+               
                 {token && (
                   <Link
                     to={routes.wishlist}
                     onClick={() => {
-                      setActive('wishlist');
+                      setActive("wishlist");
                     }}
-                    className={isActive.includes('wishlist') ? 'nav-link my-border' : 'nav-link'}
+                    className={
+                      isActive.includes("wishlist")
+                        ? "nav-link my-border"
+                        : "nav-link"
+                    }
                   >
                     Wishlist
                   </Link>
                 )}
                 <Link
                   to={routes.contact}
-                  onClick={() => setActive('contact')}
-                  className={isActive.includes('contact') ? 'nav-link my-border' : 'nav-link'}
+                  onClick={() => setActive("contact")}
+                  className={
+                    isActive.includes("contact")
+                      ? "nav-link my-border"
+                      : "nav-link"
+                  }
                 >
                   Contact Us
                 </Link>
@@ -84,17 +98,40 @@ export default function Navbar() {
                   <>
                     <Link
                       to={routes.login}
-                      onClick={() => setActive('login')}
-                      className={isActive.includes('login') ? 'nav-link my-border' : 'nav-link'}
+                      onClick={() => setActive("login")}
+                      className={
+                        isActive.includes("login")
+                          ? "nav-link my-border"
+                          : "nav-link"
+                      }
                     >
                       Login
                     </Link>
                     <Link
                       to={routes.signup}
-                      onClick={() => setActive('signup')}
-                      className={isActive.includes('signup') ? 'nav-link my-border' : 'nav-link'}
+                      onClick={() => setActive("signup")}
+                      className={
+                        isActive.includes("signup")
+                          ? "nav-link my-border"
+                          : "nav-link"
+                      }
                     >
                       Signup
+                    </Link>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <Link
+                      to={routes.listItem}
+                      onClick={() => setActive("listItem")}
+                      className={
+                        isActive.includes("listItem")
+                          ? "nav-link my-border"
+                          : "nav-link"
+                      }
+                    >
+                      List Item
                     </Link>
                   </>
                 )}
@@ -103,9 +140,13 @@ export default function Navbar() {
                     to={routes.login}
                     onClick={() => {
                       localStorage.clear();
-                      setActive('login');
+                      setActive("login");
                     }}
-                    className={isActive.includes('login') ? 'nav-link my-border d-none' : 'nav-link'}
+                    className={
+                      isActive.includes("login")
+                        ? "nav-link my-border d-none"
+                        : "nav-link"
+                    }
                   >
                     Logout
                   </Link>
